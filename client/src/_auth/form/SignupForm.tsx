@@ -14,10 +14,11 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { signupValidation } from '@/lib/validation';
 import Loader from '@/components/ui/shared/Loader';
+import { Link } from 'react-router-dom';
 // import { z } from 'zod';
 
 const SignupForm = () => {
-  const isLoading = true;
+  const isLoading = false;
   const form = useForm<z.infer<typeof signupValidation>>({
     resolver: zodResolver(signupValidation),
     defaultValues: {
@@ -52,7 +53,7 @@ const SignupForm = () => {
         </h3>
 
         <p className='small-medium md:base-regular text-white'>
-          To use LinkGram enter your account details
+          To use LinkGram, please enter your details
         </p>
       </div>
 
@@ -126,6 +127,15 @@ const SignupForm = () => {
             'SignUp'
           )}
         </Button>
+        <p className='text-small-regular text-light-2 text-center mt-2'>
+          Already have an account?{' '}
+          <Link
+            to='/sign-in'
+            className='text-primary-600 text-small-semibold ml-1'
+          >
+            Login
+          </Link>
+        </p>
       </form>
     </Form>
   );
