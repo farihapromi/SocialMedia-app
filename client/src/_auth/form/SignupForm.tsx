@@ -16,6 +16,7 @@ import { signupValidation } from '@/lib/validation';
 // import { z } from 'zod';
 
 const SignupForm = () => {
+  const isLoading = true;
   const form = useForm<z.infer<typeof signupValidation>>({
     resolver: zodResolver(signupValidation),
     defaultValues: {
@@ -36,7 +37,7 @@ const SignupForm = () => {
     <Form {...form}>
       <div className='sm:w-420 flex-center flex-col'>
         {/* Logo + Text side-by-side */}
-        <div className='flex items-center gap-3'>
+        <div className='flex items-center gap-2'>
           <img
             src='/assets/images/logo_final.PNG' // No need to include `/public` in the path
             alt='LinkGram logo'
@@ -45,7 +46,7 @@ const SignupForm = () => {
           <p className='text-white text-xl font-semibold'>LinkGram</p>
         </div>
 
-        <h3 className='h3-bold md:h2-bold pt-5 sm:pt-12 text-2xl font-bold text-white'>
+        <h3 className='h3-bold md:h2-bold pt-2 sm:pt-6 text-2xl font-bold text-white'>
           Create a new account
         </h3>
 
@@ -115,7 +116,7 @@ const SignupForm = () => {
           )}
         />
         <Button className='shad-button_primary' type='submit'>
-          Submit
+          {isLoading ? <div>Loading......</div> : 'SignUp'}
         </Button>
       </form>
     </Form>
