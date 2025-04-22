@@ -13,6 +13,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { signupValidation } from '@/lib/validation';
+import Loader from '@/components/ui/shared/Loader';
 // import { z } from 'zod';
 
 const SignupForm = () => {
@@ -116,7 +117,14 @@ const SignupForm = () => {
           )}
         />
         <Button className='shad-button_primary' type='submit'>
-          {isLoading ? <div>Loading......</div> : 'SignUp'}
+          {isLoading ? (
+            <div className='flex-center gap-2'>
+              <Loader />
+              Loading......
+            </div>
+          ) : (
+            'SignUp'
+          )}
         </Button>
       </form>
     </Form>
