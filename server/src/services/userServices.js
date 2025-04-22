@@ -1,8 +1,8 @@
-import User from '../models/user';
+import User from '../models/user.js';
 import bcrypt from 'bcrypt';
 import cloudinary from 'cloudinary';
 //config cloudnairy
-cloudinary.v.config({
+cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
