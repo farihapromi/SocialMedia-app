@@ -7,7 +7,15 @@ const userSchema = new mongoose.Schema(
     password: string,
     imageUrl: String,
     imageId: String,
+    deleted: {
+      type: Boolean,
+      default: false,
+    },
+    deletedAt: {
+      type: Date,
+    },
   },
+
   { timestamps: true }
 );
 
