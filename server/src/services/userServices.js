@@ -30,6 +30,6 @@ export async function getAllUser() {
   return await User.find({ deleted: false });
 }
 
-export const updateUser = async (id, payload) => {
+export const updateAllUser = async (id, payload) => {
   return await User.findOneAndUpdate({ _id: id }, payload, { new: true });
 };

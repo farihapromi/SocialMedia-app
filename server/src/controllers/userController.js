@@ -2,7 +2,7 @@ import asyncHandler from 'express-async-handler';
 import {
   createUserAccount,
   getAllUser,
-  updateUser,
+  updateAllUser,
 } from '../services/userServices.js';
 import uploads from '../middleware/uploadMiddleware.js'; // Import the multer middleware
 
@@ -47,9 +47,26 @@ export const getUser = asyncHandler(async (req, res) => {
 
 export const updateUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const updateUser = await updateUser(id, req.body);
-  if (!updateUser) {
-    return res.status(400).json({ message: `User not found with ${id}` });
+  const trimmedId = id.trim(); // Trim extra spaces or newlines
+
+  const { name, username, email, password } = req.body;
+  const avatarFile = req.file;
+
+  const payload = {
+    name,
+    username,
+    email,
+    password,
+  };
+
+  if (avatarFile) {
+    payload.imageUrl = `/uploads/${avatarFile.filename}`;
+    payload.imageId = avatarFile.filename;
   }
-  res.json(updateUser);
+
+  const updatedUser = await updateAllUser(trimmedId, payload);
+  if (!updatedUser) {
+    return res.status(400).json({ message: `User not found with ID: ${id}` });
+  }
+  res.json(updatedUser);
 });
