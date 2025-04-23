@@ -1,5 +1,5 @@
 import asyncHandler from 'express-async-handler';
-import { createUserAccount } from '../services/userServices.js';
+import { createUserAccount, getAllUser } from '../services/userServices.js';
 import uploads from '../middleware/uploadMiddleware.js'; // Import the multer middleware
 
 // Route to create user account with avatar upload
@@ -35,4 +35,8 @@ export const createUser = asyncHandler(async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   });
+});
+export const getUser = asyncHandler(async (req, res) => {
+  const users = await getAllUser();
+  res.status(200).json(users);
 });
