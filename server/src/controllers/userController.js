@@ -1,16 +1,16 @@
 import asyncHandler from 'express-async-handler';
 import {
   createUserAccount,
+  deleteAlluser,
   getAllUser,
   updateAllUser,
 } from '../services/userServices.js';
-import uploads from '../middleware/uploadMiddleware.js'; // Import the multer middleware
+import uploads from '../middleware/uploadMiddleware.js';
 
-// Route to create user account with avatar upload
 export const createUser = asyncHandler(async (req, res) => {
   // Use multer to handle file upload in the 'avatar' field
   uploads.single('avatarFile')(req, res, async (err) => {
-    console.error('Multer Error:', err); // Log the full error object
+    console.error('Multer Error:', err);
     if (err) {
       return res.status(400).json({ message: 'Error uploading file' });
     }
@@ -24,7 +24,6 @@ export const createUser = asyncHandler(async (req, res) => {
     }
 
     try {
-      // Call the function to create the user account
       const newUser = await createUserAccount({
         name,
         username,
@@ -33,7 +32,6 @@ export const createUser = asyncHandler(async (req, res) => {
         avatarFile,
       });
 
-      // Respond with the created user account
       res.status(201).json(newUser);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -47,7 +45,7 @@ export const getUser = asyncHandler(async (req, res) => {
 
 export const updateUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const trimmedId = id.trim(); // Trim extra spaces or newlines
+  const trimmedId = id.trim();
 
   const { name, username, email, password } = req.body;
   const avatarFile = req.file;
@@ -66,7 +64,16 @@ export const updateUser = asyncHandler(async (req, res) => {
 
   const updatedUser = await updateAllUser(trimmedId, payload);
   if (!updatedUser) {
-    return res.status(400).json({ message: `User not found with ID: ${id}` });
+    return res.status(404).json({ message: `User not found with ID: ${id}` });
   }
   res.json(updatedUser);
+});
+export const deleteUser = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const trimmedId = id.trim();
+  const deleteUser = await deleteAlluser(trimmedId);
+  if (!deleteUser) {
+    res.status(404).json({ message: `No user found with this ${id} id` });
+  }
+  res.json({ message: 'User deleted succesfully' });
 });

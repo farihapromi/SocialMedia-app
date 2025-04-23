@@ -33,3 +33,12 @@ export async function getAllUser() {
 export const updateAllUser = async (id, payload) => {
   return await User.findOneAndUpdate({ _id: id }, payload, { new: true });
 };
+
+export const deleteAlluser = async (id) => {
+  return await User.findByIdAndUpdate(
+    { _id: id },
+
+    { deleted: true, deletedAt: new Date() },
+    { new: true }
+  );
+};
