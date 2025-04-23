@@ -12,8 +12,7 @@ export async function createUserAccount({
 }) {
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  // Generate local file URL
-  const imageUrl = `/uploads/${avatarFile.filename}`; // this will be the path served by static folder
+  const imageUrl = `/uploads/${avatarFile.filename}`;
 
   const newUser = new User({
     name,
@@ -21,9 +20,12 @@ export async function createUserAccount({
     email,
     password: hashedPassword,
     imageUrl,
-    imageId: avatarFile.filename, // optional, used if needed for deletion later
+    imageId: avatarFile.filename,
   });
 
   await newUser.save();
   return newUser;
+}
+export async function getAllUser() {
+  return await User.find({ deleted: false });
 }
