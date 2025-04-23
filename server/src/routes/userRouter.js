@@ -1,10 +1,11 @@
 // routes/userRoutes.js
 import express from 'express';
 import uploads from '../middleware/uploadMiddleware.js';
-import { createUser } from '../controllers/userController.js';
+import { createUser, getUser } from '../controllers/userController.js';
 
-const router = express.Router();
+const userRoute = express.Router();
 
-router.post('/users', createUser);
+userRoute.post('/users', createUser);
+userRoute.get('/users', getUser);
 
-export default router;
+export default userRoute;
