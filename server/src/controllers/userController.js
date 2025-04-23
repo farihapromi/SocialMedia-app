@@ -6,15 +6,15 @@ import uploads from '../middleware/uploadMiddleware.js'; // Import the multer mi
 export const createUser = asyncHandler(async (req, res) => {
   // Use multer to handle file upload in the 'avatar' field
   uploads.single('avatarFile')(req, res, async (err) => {
+    console.error('Multer Error:', err); // Log the full error object
     if (err) {
       return res.status(400).json({ message: 'Error uploading file' });
     }
-
     // Destructure data from the request body
     const { name, username, email, password } = req.body;
     const avatarFile = req.file;
+    console.log('this is avaatr', avatarFile);
 
-    // Check if avatar file is uploaded
     if (!avatarFile) {
       return res.status(400).json({ message: 'Avatar file is required' });
     }

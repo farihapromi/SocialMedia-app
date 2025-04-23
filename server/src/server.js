@@ -4,6 +4,7 @@ import cors from 'cors';
 import connectDB from './config/db.js';
 import configureRouter from './routes/index.js';
 import multer from 'multer';
+import path from 'path';
 
 // Load environment variables first
 dotenv.config();
@@ -16,6 +17,8 @@ const app = express();
 // Middleware to enable CORS and JSON parsing
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded());
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 // Connect to the database
 connectDB();

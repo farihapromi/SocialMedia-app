@@ -1,10 +1,10 @@
+// routes/userRoutes.js
 import express from 'express';
+import uploads from '../middleware/uploadMiddleware.js';
 import { createUser } from '../controllers/userController.js';
-import multer from 'multer';
 
-const userRouter = express.Router();
-// Setup multer for file upload handling
-const upload = multer({ dest: 'uploads/' });
+const router = express.Router();
 
-userRouter.post('/users', createUser);
-export default userRouter;
+router.post('/users', createUser);
+
+export default router;
