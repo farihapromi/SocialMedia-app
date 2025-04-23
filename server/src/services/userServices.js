@@ -29,3 +29,7 @@ export async function createUserAccount({
 export async function getAllUser() {
   return await User.find({ deleted: false });
 }
+
+export const updateUser = async (id, payload) => {
+  return await User.findOneAndUpdate({ _id: id }, payload, { new: true });
+};
