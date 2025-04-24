@@ -1,5 +1,5 @@
 import Post from '../models/post';
-export const createPost = async ({
+export const createPostService = async ({
   caption,
   location,
   tags,
@@ -11,7 +11,6 @@ export const createPost = async ({
     location,
     tags,
     imageUrl,
-
     creator,
   });
   await newPost.save();
