@@ -1,4 +1,3 @@
-// routes/userRoutes.js
 import express from 'express';
 import uploads from '../middleware/uploadMiddleware.js';
 import {
@@ -10,9 +9,9 @@ import {
 
 const userRoute = express.Router();
 
-userRoute.post('/users', createUser);
-userRoute.get('/users', getUser);
-userRoute.put('/users/:id', uploads.single('avatarFile'), updateUser);
-userRoute.delete('/users/:id', deleteUser);
+userRoute.post('/', createUser);
+userRoute.get('/', getUser);
+userRoute.put('/:id', uploads.single('avatarFile'), updateUser);
+userRoute.delete('/:id', deleteUser);
 
 export default userRoute;

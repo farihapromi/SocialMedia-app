@@ -8,7 +8,6 @@ import path from 'path';
 
 // Load environment variables first
 dotenv.config();
-console.log(process.env.CLOUDINARY_API_KEY); // Verify if the API key is being loaded correctly
 
 const port = process.env.PORT || 5000;
 
@@ -17,8 +16,14 @@ const app = express();
 // Middleware to enable CORS and JSON parsing
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
+
 //app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+app.use((req, res, next) => {
+  console.log(`Request received: ${req.method} ${req.originalUrl}`);
+  next(); // Move to the next middleware/route handler
+});
+
 app.use('/uploads', express.static('uploads'));
 
 // Connect to the database
@@ -26,6 +31,5 @@ connectDB();
 
 // Configure routes
 configureRouter(app);
-app.use(express.urlencoded({ extended: true }));
 
 app.listen(port, () => console.log(`Server running on port ${port}`));

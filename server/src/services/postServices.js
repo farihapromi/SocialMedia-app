@@ -1,4 +1,5 @@
-import Post from '../models/post';
+import Post from '../models/post.js';
+
 export const createPostService = async ({
   caption,
   location,
@@ -6,13 +7,19 @@ export const createPostService = async ({
   imageUrl,
   creator,
 }) => {
-  const newPost = new Post({
-    caption,
-    location,
-    tags,
-    imageUrl,
-    creator,
-  });
-  await newPost.save();
-  return newPost;
+  try {
+    const newPost = new Post({
+      caption,
+      location,
+      tags,
+      imageUrl,
+      creator,
+    });
+
+    await newPost.save();
+    return newPost;
+  } catch (error) {
+    console.error('Error saving post:', error.message);
+    throw new Error(error.message);
+  }
 };
