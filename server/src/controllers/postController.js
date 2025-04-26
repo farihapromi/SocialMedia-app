@@ -1,5 +1,9 @@
 import asyncHandler from 'express-async-handler';
-import { createPostService, getAllPosts } from '../services/postServices.js';
+import {
+  createPostService,
+  getAllPosts,
+  updateAllPosts,
+} from '../services/postServices.js';
 
 export const createPost = asyncHandler(async (req, res) => {
   const { caption, location, tags, creator } = req.body;
@@ -25,4 +29,22 @@ export const createPost = asyncHandler(async (req, res) => {
 export const getPosts = asyncHandler(async (req, res) => {
   const posts = await getAllPosts();
   res.status(200).json(posts);
+});
+
+export const updatePosts = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { caption, location, tags, creator } = req.body;
+  const postImage = req.file;
+  const payload = { caption, location, tags, creator };
+  if (postImage) {
+    payload.imageUrl = `/uploads/${postImage.filename}`;
+    payload.imageId = postImage.filename;
+  }
+  const updatedPosts = await updateAllPosts(id, payload);
+  if (!updatedPosts) {
+    return res
+      .status(404)
+      .jaon({ message: `no user found with this ${id} id` });
+  }
+  res.status(200).jaon(updatedPosts);
 });
