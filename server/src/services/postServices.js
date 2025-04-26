@@ -23,3 +23,6 @@ export const createPostService = async ({
     throw new Error(error.message);
   }
 };
+export const getAllPosts = async () => {
+  return await Post.find({ deleted: false });
+};

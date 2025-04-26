@@ -1,5 +1,5 @@
 import asyncHandler from 'express-async-handler';
-import { createPostService } from '../services/postServices.js';
+import { createPostService, getAllPosts } from '../services/postServices.js';
 
 export const createPost = asyncHandler(async (req, res) => {
   const { caption, location, tags, creator } = req.body;
@@ -20,4 +20,9 @@ export const createPost = asyncHandler(async (req, res) => {
   });
 
   res.status(201).json(newPost);
+});
+
+export const getPosts = asyncHandler(async (req, res) => {
+  const posts = await getAllPosts();
+  res.status(200).json(posts);
 });
