@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import {
   createPostService,
+  deleteAllPosts,
   getAllPosts,
   updateAllPosts,
 } from '../services/postServices.js';
@@ -44,7 +45,16 @@ export const updatePosts = asyncHandler(async (req, res) => {
   if (!updatedPosts) {
     return res
       .status(404)
-      .json({ message: `no user found with this ${id} id` });
+      .json({ message: `no post found with this ${id} id` });
   }
   res.status(200).json(updatedPosts);
+});
+
+export const deletePost = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const deletePost = await deleteAllPosts(id);
+  if (!deletePost) {
+    return res.status(404).json({ message: `No post found with this ${id}` });
+  }
+  res.status(200).json({ message: 'Post deleted successfully' });
 });

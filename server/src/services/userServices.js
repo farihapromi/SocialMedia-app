@@ -33,10 +33,5 @@ export const updateAllUser = async (id, payload) => {
 };
 
 export const deleteAlluser = async (id) => {
-  return await User.findByIdAndUpdate(
-    { _id: id },
-
-    { deleted: true, deletedAt: new Date() },
-    { new: true }
-  );
+  return await User.findByIdAndUpdate(id);
 };
