@@ -44,7 +44,7 @@ export const updatePosts = asyncHandler(async (req, res) => {
   if (!updatedPosts) {
     return res
       .status(404)
-      .jaon({ message: `no user found with this ${id} id` });
+      .json({ message: `no user found with this ${id} id` });
   }
-  res.status(200).jaon(updatedPosts);
+  res.status(200).json(updatedPosts);
 });

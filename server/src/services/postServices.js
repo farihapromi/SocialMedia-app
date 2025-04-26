@@ -29,3 +29,11 @@ export const getAllPosts = async () => {
 export const updateAllPosts = async (id, payload) => {
   return await Post.findByIdAndUpdate({ _id: id }, payload, { new: true });
 };
+
+export const deleteAllPosts = async (id) => {
+  return await Post.findByIdAndUpdate(
+    { _id: id },
+    { deleted: true, deletedAt: new Date() },
+    { new: true }
+  );
+};
