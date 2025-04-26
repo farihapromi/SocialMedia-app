@@ -26,3 +26,6 @@ export const createPostService = async ({
 export const getAllPosts = async () => {
   return await Post.find({ deleted: false });
 };
+export const updateAllPosts = async (id, payload) => {
+  return await Post.findByIdAndUpdate({ _id: id }, payload, { new: true });
+};
